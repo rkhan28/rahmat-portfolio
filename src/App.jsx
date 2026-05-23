@@ -1,13 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import BuilderScene from "./Components/BuilderScene";
-/*
-  Updated hero visual:
-  - The builder animation is now part of the background, not a separate gray box.
-  - The character is smaller, more subtle, and layered behind the hero/console.
-  - Added walking, carrying, picking, placing, ghosted motion trails, source/build areas, and a polished smile.
-  - Kept everything in this single App.jsx file. No image assets or 3D model files required.
-*/
+
 
 function Icon({ name, className = "h-5 w-5" }) {
   const common = {
@@ -305,13 +299,13 @@ function SectionHeader({ kicker, title, children }) {
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.65, ease: "easeOut" }}
-      className="mb-10 flex flex-col gap-3"
+      className="mb-8 flex flex-col gap-3 sm:mb-10"
     >
       <p className="inline-flex w-fit rounded-full border border-white/10 bg-white/10 px-4 py-2 font-mono text-xs font-black uppercase tracking-[0.25em] text-amber-200 shadow-[0_10px_30px_rgba(0,0,0,0.25)] backdrop-blur-xl">
         {kicker}
       </p>
-      <h2 className="max-w-4xl text-3xl font-black tracking-[-0.04em] text-white md:text-5xl">{title}</h2>
-      {children && <p className="max-w-2xl text-base font-medium leading-8 text-slate-300 md:text-lg">{children}</p>}
+      <h2 className="max-w-4xl text-2xl font-black tracking-[-0.04em] text-white sm:text-3xl md:text-5xl">{title}</h2>
+      {children && <p className="max-w-2xl text-sm font-medium leading-7 text-slate-300 sm:text-base sm:leading-8 md:text-lg">{children}</p>}
     </motion.div>
   );
 }
@@ -329,7 +323,7 @@ function ActionButton({ href, children, variant = "primary", icon }) {
       href={href}
       target="_blank"
       rel="noreferrer"
-      className={`group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-2xl border-2 px-6 py-4 text-sm font-black transition-all duration-200 ${styles}`}
+      className={`group relative inline-flex w-full items-center justify-center gap-3 overflow-hidden rounded-2xl border-2 px-5 py-3.5 text-sm font-black transition-all duration-200 sm:w-auto sm:px-6 sm:py-4 ${styles}`}
     >
       <Studs count={2} className="absolute right-3 top-2 opacity-35" />
       {icon && <Icon name={icon} className="relative h-5 w-5" />}
@@ -340,7 +334,7 @@ function ActionButton({ href, children, variant = "primary", icon }) {
 
 function ElevatedCard({ children, color = "bg-slate-900/85", className = "" }) {
   return (
-    <div className={`relative overflow-hidden rounded-[2rem] border border-white/10 ${color} p-7 shadow-[0_14px_0_rgba(0,0,0,0.28),0_26px_70px_rgba(0,0,0,0.35)] backdrop-blur-xl ${className}`}>
+    <div className={`relative overflow-hidden rounded-[1.6rem] border border-white/10 ${color} p-5 shadow-[0_14px_0_rgba(0,0,0,0.28),0_26px_70px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:rounded-[2rem] sm:p-7 ${className}`}>
       <Studs count={3} className="absolute right-5 top-5 opacity-45" />
       {children}
     </div>
@@ -409,9 +403,9 @@ function SummaryPanel() {
   ];
 
   return (
-    <motion.div variants={fadeUp} transition={{ duration: 0.75 }} className="relative mt-8 max-w-3xl overflow-hidden rounded-[2.25rem] border border-white/10 bg-slate-950/55 p-[1px] shadow-[0_20px_80px_rgba(0,0,0,0.35)] backdrop-blur-2xl">
+    <motion.div variants={fadeUp} transition={{ duration: 0.75 }} className="relative mt-6 max-w-3xl overflow-hidden rounded-[1.75rem] border border-white/10 bg-slate-950/55 p-[1px] shadow-[0_20px_80px_rgba(0,0,0,0.35)] backdrop-blur-2xl sm:mt-8 sm:rounded-[2.25rem]">
       <motion.div animate={{ x: ["-120%", "120%"] }} transition={{ duration: 4.5, repeat: Infinity, repeatDelay: 3, ease: "easeInOut" }} className="absolute top-0 h-px w-2/3 bg-gradient-to-r from-transparent via-amber-200/80 to-transparent" />
-      <div className="relative rounded-[2.2rem] bg-gradient-to-br from-white/[0.09] via-white/[0.045] to-white/[0.025] p-6 md:p-7">
+      <div className="relative rounded-[1.7rem] bg-gradient-to-br from-white/[0.09] via-white/[0.045] to-white/[0.025] p-4 sm:rounded-[2.2rem] sm:p-6 md:p-7">
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <span className="grid h-11 w-11 place-items-center rounded-2xl bg-amber-200/90 text-slate-950 shadow-[0_6px_0_rgba(146,64,14,0.55)]">
@@ -433,9 +427,9 @@ function SummaryPanel() {
         </div>
         <div className="space-y-3">
           {lines.map((line, index) => (
-            <motion.div key={line} initial={{ opacity: 0, x: -14 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.55, delay: 0.8 + index * 0.18 }} className="group flex gap-3 rounded-2xl border border-white/[0.07] bg-black/20 p-4 transition hover:border-amber-200/20 hover:bg-white/[0.06]">
+            <motion.div key={line} initial={{ opacity: 0, x: -14 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.55, delay: 0.8 + index * 0.18 }} className="group flex gap-3 rounded-2xl border border-white/[0.07] bg-black/20 p-3 transition hover:border-amber-200/20 hover:bg-white/[0.06] sm:p-4">
               <span className={`mt-2 h-3 w-3 shrink-0 rounded-full ${accentColors[index % accentColors.length].split(" ")[0]} shadow-lg`} />
-              <p className="text-base font-medium leading-7 text-slate-300 md:text-lg">{line}</p>
+              <p className="text-sm font-medium leading-6 text-slate-300 sm:text-base sm:leading-7 md:text-lg">{line}</p>
             </motion.div>
           ))}
         </div>
@@ -447,11 +441,11 @@ function SummaryPanel() {
 function ProjectWord({ word = "PROJECTS" }) {
   const palette = ["bg-rose-300/70", "bg-amber-200/75", "bg-sky-300/70", "bg-teal-300/65", "bg-purple-300/65", "bg-indigo-300/65"];
   return (
-    <div className="relative mb-12 overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/[0.06] p-5 shadow-[0_18px_0_rgba(0,0,0,0.25),0_35px_90px_rgba(0,0,0,0.32)] backdrop-blur-xl md:p-7">
+    <div className="relative mb-10 overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/[0.06] p-4 shadow-[0_18px_0_rgba(0,0,0,0.25),0_35px_90px_rgba(0,0,0,0.32)] backdrop-blur-xl sm:mb-12 sm:rounded-[2.5rem] sm:p-5 md:p-7">
       <motion.div animate={{ x: ["-100%", "100%"] }} transition={{ duration: 5, repeat: Infinity, repeatDelay: 1 }} className="absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
-      <div className="relative flex flex-wrap justify-center gap-3 md:gap-4">
+      <div className="relative flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4">
         {word.split("").map((letter, index) => (
-          <motion.div key={`${letter}-${index}`} initial={{ opacity: 0, y: -30, rotate: index % 2 ? 8 : -8 }} whileInView={{ opacity: 1, y: 0, rotate: 0 }} viewport={{ once: true }} transition={{ type: "spring", stiffness: 220, damping: 16, delay: index * 0.055 }} whileHover={{ y: -10, rotate: index % 2 ? 4 : -4, scale: 1.04 }} className={`relative grid h-20 w-16 place-items-center rounded-2xl border border-white/20 ${palette[index % palette.length]} text-3xl font-black text-slate-950 shadow-[0_9px_0_rgba(0,0,0,0.35)] md:h-24 md:w-20 md:text-4xl`}>
+          <motion.div key={`${letter}-${index}`} initial={{ opacity: 0, y: -30, rotate: index % 2 ? 8 : -8 }} whileInView={{ opacity: 1, y: 0, rotate: 0 }} viewport={{ once: true }} transition={{ type: "spring", stiffness: 220, damping: 16, delay: index * 0.055 }} whileHover={{ y: -10, rotate: index % 2 ? 4 : -4, scale: 1.04 }} className={`relative grid h-12 w-10 place-items-center rounded-xl border border-white/20 ${palette[index % palette.length]} text-xl font-black text-slate-950 shadow-[0_7px_0_rgba(0,0,0,0.35)] sm:h-16 sm:w-12 sm:rounded-2xl sm:text-2xl md:h-24 md:w-20 md:text-4xl`}>
             <Studs count={2} className="absolute top-2 opacity-45" />
             <span className="relative mt-4">{letter}</span>
           </motion.div>
@@ -477,55 +471,54 @@ export default function App() {
       <motion.div animate={{ scale: [1, 1.1, 1], y: [0, -30, 0] }} transition={{ duration: 14, repeat: Infinity }} className="pointer-events-none fixed right-[-12rem] top-20 h-[36rem] w-[36rem] rounded-full bg-sky-300/10 blur-[130px]" />
       <motion.div animate={{ scale: [1, 1.12, 1], x: [0, -40, 0] }} transition={{ duration: 16, repeat: Infinity }} className="pointer-events-none fixed bottom-[-16rem] left-1/2 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-amber-200/10 blur-[130px]" />
 
-      <nav className="fixed left-0 right-0 top-0 z-50 px-4 py-4">
-  <div className="mx-auto flex w-fit max-w-[calc(100vw-2rem)] items-center justify-center rounded-[2rem] border border-white/10 bg-slate-950/35 px-4 py-3 shadow-[0_18px_70px_rgba(0,0,0,0.35)] backdrop-blur-2xl transition-all duration-500 supports-[backdrop-filter]:bg-slate-950/25">
-    <div className="flex flex-wrap items-center justify-center gap-3 text-sm font-black text-slate-200 md:gap-4">
-      {["About", "Experience", "Projects", "Skills"].map((item) => (
-        <a
-          key={item}
-          href={`#${item.toLowerCase()}`}
-          className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.075] px-5 py-2.5 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_10px_30px_rgba(0,0,0,0.28)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-white/25 hover:bg-white/[0.13] hover:shadow-[0_14px_38px_rgba(0,0,0,0.35)]"
-        >
-          <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
-          <span className="relative">{item}</span>
-        </a>
-      ))}
+      <nav className="fixed left-0 right-0 top-0 z-50 px-3 py-3 sm:px-4 sm:py-4">
+        <div className="mx-auto flex w-fit max-w-[calc(100vw-1rem)] items-center justify-center overflow-x-auto rounded-[1.5rem] border border-white/10 bg-slate-950/35 px-2 py-2 shadow-[0_18px_70px_rgba(0,0,0,0.35)] backdrop-blur-2xl transition-all duration-500 sm:max-w-[calc(100vw-2rem)] sm:rounded-[2rem] sm:px-4 sm:py-3 supports-[backdrop-filter]:bg-slate-950/25">
+          <div className="flex min-w-max items-center justify-center gap-2 text-xs font-black text-slate-200 sm:gap-3 sm:text-sm md:gap-4">
+            {["About", "Experience", "Projects", "Skills"].map((item) => (
+              <a
+                key={item}
+                href={`#${item.toLowerCase()}`}
+                className="group relative overflow-hidden rounded-xl border border-white/10 bg-white/[0.075] px-3 py-2 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_10px_30px_rgba(0,0,0,0.28)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-white/25 hover:bg-white/[0.13] sm:rounded-2xl sm:px-5 sm:py-2.5"
+              >
+                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+                <span className="relative">{item}</span>
+              </a>
+            ))}
+            <a
+              href={`mailto:${profile.email}`}
+              className="group relative overflow-hidden rounded-xl border border-white/10 bg-white/[0.075] px-3 py-2 font-black text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_10px_30px_rgba(0,0,0,0.28)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-amber-200/30 hover:bg-amber-200/15 sm:rounded-2xl sm:px-5 sm:py-2.5"
+            >
+              <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-amber-100/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+              <span className="relative">contact</span>
+            </a>
+          </div>
+        </div>
+      </nav>
 
-      <a
-        href={`mailto:${profile.email}`}
-        className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.075] px-5 py-2.5 font-black text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_10px_30px_rgba(0,0,0,0.28)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-amber-200/30 hover:bg-amber-200/15"
-      >
-        <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-amber-100/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
-        <span className="relative">contact</span>
-      </a>
-    </div>
-  </div>
-</nav>
-
-      <section id="top" className="relative mx-auto flex min-h-screen max-w-7xl items-center px-5 pb-24 pt-28 md:px-8">
+      <section id="top" className="relative mx-auto flex min-h-screen max-w-7xl items-center px-4 pb-16 pt-28 sm:px-5 sm:pb-24 md:px-8">
         <BuilderScene />
         <FloatingUnit className="right-20 top-32" color="bg-rose-300/70" delay={0.2} studs={4} />
         <FloatingUnit className="right-72 bottom-36 rotate-6" color="bg-amber-200/75" delay={1.1} studs={3} />
         <FloatingUnit className="right-[30rem] top-64" color="bg-sky-300/70" delay={1.8} studs={2} />
         <FloatingUnit className="left-10 bottom-24" color="bg-teal-300/65" delay={2.3} studs={4} />
 
-        <div className="grid w-full items-center gap-14 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="grid w-full items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14">
           <motion.div initial="hidden" animate="visible" transition={{ staggerChildren: 0.12 }} className="relative z-10">
-            <motion.h1 variants={fadeUp} transition={{ duration: 0.75, ease: "easeOut" }} className="max-w-5xl text-5xl font-black tracking-[-0.06em] text-white md:text-7xl lg:text-8xl">
+            <motion.h1 variants={fadeUp} transition={{ duration: 0.75, ease: "easeOut" }} className="max-w-5xl text-[2.65rem] font-black leading-[0.92] tracking-[-0.055em] text-white sm:text-5xl md:text-7xl lg:text-8xl">
               {profile.name}
             </motion.h1>
-            <motion.p variants={fadeUp} transition={{ duration: 0.75, ease: "easeOut" }} className="mt-8 max-w-4xl text-2xl font-black leading-tight tracking-[-0.04em] text-slate-100 md:text-4xl">
+            <motion.p variants={fadeUp} transition={{ duration: 0.75, ease: "easeOut" }} className="mt-5 max-w-4xl text-xl font-black leading-tight tracking-[-0.035em] text-slate-100 sm:mt-8 sm:text-2xl md:text-4xl">
               {profile.title}
             </motion.p>
-            <motion.div variants={fadeUp} transition={{ duration: 0.75 }} className="mt-8 flex flex-wrap gap-4">
+            <motion.div variants={fadeUp} transition={{ duration: 0.75 }} className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:gap-4">
               <ActionButton href={`mailto:${profile.email}`} icon="mail">Contact Me</ActionButton>
               <ActionButton href={profile.github} variant="secondary" icon="github">GitHub Profile</ActionButton>
               <ActionButton href={profile.resume} variant="secondary" icon="file">View Resume</ActionButton>
             </motion.div>
             <SummaryPanel />
-            <motion.div variants={fadeUp} transition={{ duration: 0.75 }} className="mt-7 flex flex-wrap gap-3">
+            <motion.div variants={fadeUp} transition={{ duration: 0.75 }} className="mt-6 flex gap-2 overflow-x-auto pb-2 sm:mt-7 sm:flex-wrap sm:gap-3 sm:overflow-visible sm:pb-0">
               {["AI systems", "automation", "cloud infra", "API design", "computer vision"].map((tag, i) => (
-                <motion.span key={tag} whileHover={{ y: -5, rotate: i % 2 ? 2 : -2 }} className={`rounded-2xl border border-white/10 px-4 py-2 text-sm font-black text-slate-950 shadow-[0_6px_0_rgba(0,0,0,0.28)] ${accentColors[i]}`}>
+                <motion.span key={tag} whileHover={{ y: -5, rotate: i % 2 ? 2 : -2 }} className={`shrink-0 rounded-2xl border border-white/10 px-3 py-2 text-xs font-black text-slate-950 shadow-[0_6px_0_rgba(0,0,0,0.28)] sm:px-4 sm:text-sm ${accentColors[i]}`}>
                   {tag}
                 </motion.span>
               ))}
@@ -535,7 +528,7 @@ export default function App() {
         </div>
       </section>
 
-      <section id="about" className="relative mx-auto max-w-7xl px-5 py-24 md:px-8">
+      <section id="about" className="relative mx-auto max-w-7xl px-4 py-16 sm:px-5 sm:py-20 md:px-8 lg:py-24">
         <SectionHeader kicker="01 / About" title="A builder who turns complexity into something people can actually use.">
           I work across computer vision, automation, cloud infrastructure, data systems, and product-facing engineering — with a bias toward clean execution and fast iteration.
         </SectionHeader>
@@ -552,12 +545,12 @@ export default function App() {
         </div>
       </section>
 
-      <section id="experience" className="relative mx-auto max-w-7xl px-5 py-24 md:px-8">
+      <section id="experience" className="relative mx-auto max-w-7xl px-4 py-16 sm:px-5 sm:py-20 md:px-8 lg:py-24">
         <SectionHeader kicker="02 / Experience" title="A timeline of systems, experiments, and shipped work." />
-        <div className="relative border-l-[6px] border-white/10 pl-8 md:pl-12">
+        <div className="relative space-y-6 md:border-l-[6px] md:border-white/10 md:pl-12">
           {experiences.map((exp, i) => (
-            <motion.article key={exp.role} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.25 }} transition={{ duration: 0.65, delay: i * 0.1 }} whileHover={{ x: 8 }} className="relative mb-8 rounded-[2rem] border border-white/10 bg-white/[0.07] p-7 shadow-[0_12px_0_rgba(0,0,0,0.25),0_24px_60px_rgba(0,0,0,0.28)] backdrop-blur-xl">
-              <span className={`absolute -left-[3.65rem] top-8 grid h-12 w-12 place-items-center rounded-2xl border border-white/15 ${exp.color} shadow-[0_7px_0_rgba(0,0,0,0.35)] md:-left-[4.65rem]`}>
+            <motion.article key={exp.role} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.25 }} transition={{ duration: 0.65, delay: i * 0.1 }} whileHover={{ x: 8 }} className="relative mb-8 rounded-[1.6rem] border border-white/10 bg-white/[0.07] p-5 shadow-[0_12px_0_rgba(0,0,0,0.25),0_24px_60px_rgba(0,0,0,0.28)] backdrop-blur-xl sm:rounded-[2rem] sm:p-7">
+              <span className={`mb-5 grid h-12 w-12 place-items-center rounded-2xl border border-white/15 ${exp.color} shadow-[0_7px_0_rgba(0,0,0,0.35)] md:absolute md:-left-[4.65rem] md:top-8 md:mb-0`}>
                 <Icon name={exp.icon} className="h-6 w-6 text-slate-950" />
               </span>
               <Studs count={4} className="absolute right-5 top-5 opacity-45" />
@@ -581,7 +574,7 @@ export default function App() {
         </div>
       </section>
 
-      <section id="projects" className="relative mx-auto max-w-7xl px-5 py-24 md:px-8">
+      <section id="projects" className="relative mx-auto max-w-7xl px-4 py-16 sm:px-5 sm:py-20 md:px-8 lg:py-24">
         <SectionHeader kicker="03 / Projects" title="Product systems with APIs, automation, AI, and real-world utility.">
           Practical builds with the kind of backend logic, data flow, and interface polish that makes software feel effortless.
         </SectionHeader>
@@ -589,7 +582,7 @@ export default function App() {
         <div className="relative grid gap-5 lg:grid-cols-12">
           <div className="pointer-events-none absolute left-1/2 top-1/2 hidden h-[86%] w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/10 lg:block" />
           {projects.map((project, i) => (
-            <motion.article key={project.name} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.25 }} transition={{ duration: 0.65, delay: i * 0.1 }} whileHover={{ y: -12, rotate: i === 1 ? 1.2 : -1.2, scale: 1.015 }} className={`group relative min-h-[31rem] overflow-hidden rounded-[2.25rem] border border-white/10 bg-white/[0.08] p-7 shadow-[0_16px_0_rgba(0,0,0,0.28),0_30px_80px_rgba(0,0,0,0.32)] backdrop-blur-xl ${i === 0 ? "lg:col-span-7" : i === 1 ? "lg:col-span-5" : "lg:col-span-12"}`}>
+            <motion.article key={project.name} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.25 }} transition={{ duration: 0.65, delay: i * 0.1 }} whileHover={{ y: -12, rotate: i === 1 ? 1.2 : -1.2, scale: 1.015 }} className={`group relative min-h-0 overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/[0.08] p-5 shadow-[0_16px_0_rgba(0,0,0,0.28),0_30px_80px_rgba(0,0,0,0.32)] backdrop-blur-xl sm:rounded-[2.25rem] sm:p-7 md:min-h-[31rem] ${i === 0 ? "lg:col-span-7" : i === 1 ? "lg:col-span-5" : "lg:col-span-12"}`}>
               <motion.div animate={{ x: ["-100%", "100%"] }} transition={{ duration: 3.8, repeat: Infinity, repeatDelay: 2 + i }} className={`absolute inset-x-0 top-0 h-4 bg-gradient-to-r ${project.color}`} />
               <Studs count={i === 2 ? 8 : 4} className="absolute right-5 top-8 opacity-50" />
               <div className="relative z-10 flex h-full flex-col">
@@ -597,11 +590,11 @@ export default function App() {
                   <Icon name={project.icon} className="h-8 w-8" />
                 </div>
                 <p className="font-mono text-xs font-black uppercase tracking-[0.22em] text-slate-400">{project.type}</p>
-                <h3 className="mt-4 text-4xl font-black tracking-tight text-white">{project.name}</h3>
-                <p className="mt-5 max-w-3xl font-medium leading-8 text-slate-300">{project.description}</p>
+                <h3 className="mt-4 text-2xl font-black tracking-tight text-white sm:text-3xl md:text-4xl">{project.name}</h3>
+                <p className="mt-5 max-w-3xl text-sm font-medium leading-7 text-slate-300 sm:text-base sm:leading-8">{project.description}</p>
                 <div className="mt-7 flex flex-wrap gap-2">
                   {project.stack.map((tech, idx) => (
-                    <motion.span key={tech} whileHover={{ y: -4, rotate: idx % 2 ? 2 : -2 }} className={`rounded-2xl border border-white/10 px-3 py-2 text-xs font-black text-slate-950 shadow-[0_4px_0_rgba(0,0,0,0.28)] ${accentColors[idx % accentColors.length]}`}>
+                    <motion.span key={tech} whileHover={{ y: -4, rotate: idx % 2 ? 2 : -2 }} className={`rounded-xl border border-white/10 px-2.5 py-1.5 text-[11px] font-black text-slate-950 shadow-[0_4px_0_rgba(0,0,0,0.28)] sm:rounded-2xl sm:px-3 sm:py-2 sm:text-xs ${accentColors[idx % accentColors.length]}`}>
                       {tech}
                     </motion.span>
                   ))}
@@ -618,11 +611,11 @@ export default function App() {
         </div>
       </section>
 
-      <section id="skills" className="relative mx-auto max-w-7xl px-5 py-24 md:px-8">
+      <section id="skills" className="relative mx-auto max-w-7xl px-4 py-16 sm:px-5 sm:py-20 md:px-8 lg:py-24">
         <SectionHeader kicker="04 / Skills" title="A stack built for AI products, automation, and scalable systems." />
         <div className="flex flex-wrap gap-3">
           {skills.map((skill, i) => (
-            <motion.span key={skill} initial={{ opacity: 0, y: 16, rotate: -2 }} whileInView={{ opacity: 1, y: 0, rotate: i % 2 ? 1 : -1 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: Math.min(i * 0.022, 0.35) }} whileHover={{ y: -7, rotate: 0, scale: 1.04 }} className={`rounded-2xl border border-white/10 px-4 py-3 text-sm font-black text-slate-950 shadow-[0_6px_0_rgba(0,0,0,0.28)] ${accentColors[i % accentColors.length]}`}>
+            <motion.span key={skill} initial={{ opacity: 0, y: 16, rotate: -2 }} whileInView={{ opacity: 1, y: 0, rotate: i % 2 ? 1 : -1 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: Math.min(i * 0.022, 0.35) }} whileHover={{ y: -7, rotate: 0, scale: 1.04 }} className={`rounded-xl border border-white/10 px-3 py-2 text-xs font-black text-slate-950 shadow-[0_6px_0_rgba(0,0,0,0.28)] sm:rounded-2xl sm:px-4 sm:py-3 sm:text-sm ${accentColors[i % accentColors.length]}`}>
               <span className="mr-2 inline-block h-2 w-2 rounded-full bg-white/45 shadow-inner" />
               {skill}
             </motion.span>
@@ -630,17 +623,17 @@ export default function App() {
         </div>
       </section>
 
-      <section className="relative mx-auto max-w-7xl px-5 py-24 md:px-8">
-        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.7 }} className="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-slate-950/85 p-8 text-white shadow-[0_18px_0_rgba(0,0,0,0.35),0_35px_90px_rgba(0,0,0,0.45)] backdrop-blur-xl md:p-12">
+      <section className="relative mx-auto max-w-7xl px-4 py-16 sm:px-5 sm:py-20 md:px-8 lg:py-24">
+        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.7 }} className="relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-slate-950/85 p-5 text-white shadow-[0_18px_0_rgba(0,0,0,0.35),0_35px_90px_rgba(0,0,0,0.45)] backdrop-blur-xl sm:rounded-[2.5rem] sm:p-8 md:p-12">
           <motion.div animate={{ x: [0, 50, 0], y: [0, -20, 0] }} transition={{ duration: 10, repeat: Infinity }} className="absolute right-0 top-0 h-64 w-64 rounded-full bg-amber-200/20 blur-3xl" />
           <motion.div animate={{ x: [0, -35, 0], y: [0, 20, 0] }} transition={{ duration: 11, repeat: Infinity }} className="absolute bottom-0 left-0 h-64 w-64 rounded-full bg-sky-300/20 blur-3xl" />
           <Studs count={7} className="absolute right-7 top-7 opacity-35" />
           <p className="font-mono text-sm font-black uppercase tracking-[0.3em] text-amber-200">05 / Contact</p>
-          <h2 className="mt-5 max-w-3xl text-4xl font-black tracking-tight text-white md:text-6xl">Let&apos;s build something clever, useful, and hard to ignore.</h2>
-          <p className="mt-6 max-w-2xl text-lg font-medium leading-8 text-slate-300">
+          <h2 className="mt-5 max-w-3xl text-3xl font-black tracking-tight text-white sm:text-4xl md:text-6xl">Let&apos;s build something clever, useful, and hard to ignore.</h2>
+          <p className="mt-6 max-w-2xl text-base font-medium leading-7 text-slate-300 sm:text-lg sm:leading-8">
             Based in {profile.location}. Open to engineering roles, automation projects, AI products, and systems that need someone who can connect the pieces fast.
           </p>
-          <div className="mt-9 flex flex-wrap gap-4">
+          <div className="mt-8 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:flex-wrap sm:gap-4">
             <ActionButton href={`mailto:${profile.email}`} icon="mail">Email Me</ActionButton>
             <ActionButton href={profile.github} variant="secondary" icon="github">GitHub</ActionButton>
           </div>
